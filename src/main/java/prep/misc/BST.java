@@ -79,6 +79,17 @@ public class BST {
         return Math.max(leftH, rightH)+1;
     }
 
+    boolean isValidBST(Node curr, int lowerBound, int upperBound){
+        if(curr == null)
+            return true;
+        if(curr.data > lowerBound && curr.data < upperBound
+            && isValidBST(curr.left, lowerBound, curr.data)
+            && isValidBST(curr.right, curr.data, upperBound)){
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         BST bst = new BST();
         bst.insert(4);
@@ -92,5 +103,7 @@ public class BST {
         System.out.println();
         System.out.println(bst.findHeight(bst.root));
         bst.levelOrderTrav();
+
+        System.out.println(bst.isValidBST(bst.root, Integer.MIN_VALUE, Integer.MAX_VALUE));
     }
 }
