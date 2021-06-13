@@ -6,7 +6,7 @@ import java.util.Queue;
 public class BST {
     static class Node{
         int data;
-        Node left, right;
+        Node left, right, nextRight;
         Node(int data){
             this.data = data;
             this.left = this.right = null;
@@ -105,5 +105,30 @@ public class BST {
         bst.levelOrderTrav();
 
         System.out.println(bst.isValidBST(bst.root, Integer.MIN_VALUE, Integer.MAX_VALUE));
+    }
+
+//    TODO tchgig ms Q: connect all children on same level
+    public void connect(Node root) {
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+
+        Node temp = null;
+        while (!q.isEmpty()) {
+            int n = q.size();
+            for (int i = 0; i < n; i++) {
+                Node prev = temp;
+                temp = q.poll();
+
+                if (i > 0)
+                    prev.nextRight = temp;
+
+                if (temp.left != null)
+                    q.add(temp.left);
+
+                if (temp.right != null)
+                    q.add(temp.right);
+            }
+            temp.nextRight = null;
+        }
     }
 }
